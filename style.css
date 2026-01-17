@@ -1,162 +1,98 @@
-/* General Body Styles */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif; /* Modern Korean font */
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background-color: #f4f7f6; /* Light background for a clean look */
-    color: #333;
+    background-color: #eef2f5; /* Lighter background for a fresh look */
+    color: #343a40; /* Darker text for better contrast */
     line-height: 1.6;
-    padding: 20px;
+    padding: 30px; /* Increased padding */
     box-sizing: border-box;
 }
 
-/* Quiz Container */
-.quiz-container {
+h2 {
+    font-family: 'Montserrat', sans-serif; /* A more distinct font for headings */
+    color: #2c3e50;
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 1.8em; /* Slightly larger for prominence */
+    font-weight: 600; /* Medium-bold */
+}
+
+.main-layout {
+    display: grid;
+    gap: 30px; /* Increased space between map and table */
+    width: 100%;
+    max-width: 1400px; /* Wider layout */
+    margin-top: 20px;
+    grid-template-columns: 1fr;
+    padding: 20px; /* Padding for the main layout container itself */
+    background-color: #ffffff; /* White background for the main content area */
+    border-radius: 15px; /* More rounded corners */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08); /* Softer, deeper shadow */
+}
+
+@media (min-width: 992px) { /* Adjust breakpoint for two columns */
+    .main-layout {
+        grid-template-columns: 2fr 1fr; /* Map slightly wider than table */
+    }
+}
+
+#map {
+    height: 550px; /* Slightly increased map height */
+    width: 100%;
+    margin: 0;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.population-container {
+    padding: 25px; /* Slightly increased padding */
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    padding: 30px;
     width: 100%;
-    max-width: 600px;
+    margin: 0;
+}
+
+.population-container h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
     text-align: center;
-    box-sizing: border-box;
 }
 
-h1 {
-    color: #2c3e50;
-    margin-bottom: 25px;
-    font-size: 2em;
-}
-
-/* Question Section */
-.question-section {
-    margin-bottom: 25px;
-}
-
-.mascot-image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    border: 1px solid #eee;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-}
-
-#question-text {
-    font-size: 1.3em;
-    color: #34495e;
-    margin-bottom: 20px;
-}
-
-/* Options Container */
-.options-container {
-    display: grid;
-    grid-template-columns: 1fr; /* Single column for mobile */
-    gap: 15px;
-    margin-bottom: 25px;
-}
-
-.option-button {
-    background-color: #ecf0f1;
-    color: #2c3e50;
-    border: 2px solid #bdc3c7;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-size: 1.1em;
-    cursor: pointer;
-    transition: all 0.3s ease;
+table {
     width: 100%;
-    box-sizing: border-box;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-radius: 8px; /* Rounded table corners */
+    overflow: hidden; /* Ensures rounded corners are visible */
 }
 
-.option-button:hover:not(.correct):not(.incorrect):not(.disabled) {
-    background-color: #dcdfe1;
-    border-color: #95a5a6;
+th, td {
+    padding: 14px 18px; /* Increased padding */
+    border: none; /* Remove individual cell borders for cleaner look */
+    border-bottom: 1px solid #e9ecef; /* Light separator */
+    text-align: left;
 }
 
-.option-button.correct {
-    background-color: #2ecc71; /* Green for correct */
-    color: white;
-    border-color: #27ae60;
+th {
+    background-color: #f8f9fa; /* Lighter header background */
+    font-weight: 700; /* Bolder header text */
+    color: #495057; /* Darker header text */
+    position: sticky;
+    top: 0;
+    z-index: 1; /* Ensure header stays on top if table scrolls */
 }
 
-.option-button.incorrect {
-    background-color: #e74c3c; /* Red for incorrect */
-    color: white;
-    border-color: #c0392b;
+tr:nth-child(even) {
+    background-color: #fefefe; /* Very light alternate row */
 }
 
-.option-button.disabled {
-    cursor: not-allowed;
-    opacity: 0.7;
-}
-
-/* Feedback Message */
-.feedback {
-    font-size: 1.1em;
-    margin-top: -10px; /* Adjust to sit closer to options */
-    margin-bottom: 20px;
-    min-height: 25px; /* Reserve space to prevent layout shifts */
-    color: #2c3e50;
-}
-
-/* Buttons (Next, Restart) */
-.next-button, .restart-button {
-    background-color: #3498db; /* Blue */
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 8px;
-    font-size: 1.1em;
+tr:hover {
+    background-color: #e6f7ff; /* Light blue hover effect */
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: auto;
-    display: inline-block;
-    margin-top: 10px;
-}
-
-.next-button:hover, .restart-button:hover {
-    background-color: #2980b9; /* Darker blue on hover */
-}
-
-/* Result Section */
-.result-section {
-    padding: 20px;
-    border: 1px dashed #bdc3c7;
-    border-radius: 8px;
-    margin-top: 30px;
-    background-color: #f9fbfb;
-}
-
-.result-section h2 {
-    color: #34495e;
-    margin-bottom: 15px;
-}
-
-#score-text {
-    font-size: 1.4em;
-    font-weight: bold;
-    color: #2c3e50;
-    margin-bottom: 20px;
-}
-
-/* Utility Class */
-.hidden {
-    display: none;
-}
-
-/* Responsive Adjustments */
-@media (min-width: 600px) {
-    .options-container {
-        grid-template-columns: 1fr 1fr; /* Two columns for larger screens */
-    }
-}
-
-@media (min-width: 900px) {
-    .options-container {
-        grid-template-columns: repeat(4, 1fr); /* Four columns for even larger screens */
-    }
 }

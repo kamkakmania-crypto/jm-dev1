@@ -3,29 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Emblem Quiz</title>
+    <title>대한민국 도시별 인구수</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="quiz-container">
-        <h1>Team Emblem Quiz</h1>
-        <div id="quiz">
-            <div class="question-section">
-                <img id="mascot-image" src="" alt="Team Emblem" class="mascot-image">
-                <p id="question-text"></p>
-            </div>
-            <div id="options-container" class="options-container">
-                <!-- Options will be dynamically loaded here -->
-            </div>
-            <div id="feedback" class="feedback"></div>
-            <button id="next-button" class="next-button">Next Question</button>
+    <div class="main-layout">
+        <div id="map"></div>
+        <div class="population-container">
         </div>
-        <div id="result-section" class="result-section hidden">
-            <h2>Quiz Results</h2>
-            <p id="score-text"></p>
-            <button id="restart-button" class="restart-button">Restart</button>
-        </div>
-    </div>
+    </div> <!-- Close main-layout -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
     <script src="main.js"></script>
 </body>
 </html>

@@ -1,116 +1,81 @@
-// main.js
+document.addEventListener('DOMContentLoaded', () => {
+    const map = L.map('map').setView([36.5, 127.5], 7);
 
-const quizData = [
-    {
-        image: 'https://cdnlogo.com/logo/arsenal-fc_5988.svg',
-        question: 'Which team does this emblem belong to?',
-        options: ['Arsenal', 'Chelsea', 'Manchester United', 'Liverpool'],
-        answer: 'Arsenal'
-    },
-    {
-        image: 'https://cdnlogo.com/logo/chelsea-fc_5994.svg',
-        question: 'Which team does this emblem belong to?',
-        options: ['Tottenham Hotspur', 'Chelsea', 'Manchester City', 'Everton'],
-        answer: 'Chelsea'
-    },
-    {
-        image: 'https://cdnlogo.com/logo/manchester-united-fc_6030.svg',
-        question: 'Which team does this emblem belong to?',
-        options: ['Liverpool', 'Manchester City', 'Manchester United', 'Newcastle United'],
-        answer: 'Manchester United'
-    },
-    {
-        image: 'https://cdnlogo.com/logo/liverpool-fc_6025.svg',
-        question: 'Which team does this emblem belong to?',
-        options: ['Aston Villa', 'Liverpool', 'West Ham United', 'Leicester City'],
-        answer: 'Liverpool'
-    }
-];
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
-let currentQuestionIndex = 0;
-let score = 0;
-let answeredThisQuestion = false;
+    const minPopulationThreshold = 100000; // 10만명 기준
 
-const mascotImage = document.getElementById('mascot-image');
-const questionText = document.getElementById('question-text');
-const optionsContainer = document.getElementById('options-container');
-const feedbackElement = document.getElementById('feedback');
-const nextButton = document.getElementById('next-button');
-const quizSection = document.getElementById('quiz');
-const resultSection = document.getElementById('result-section');
-const scoreText = document.getElementById('score-text');
-const restartButton = document.getElementById('restart-button');
+    let cities = [
+        { name: 'Seoul', lat: 37.56, lon: 126.99, population: 9390000, malePopulation: 4481099, femalePopulation: 4818449 },
+        { name: 'Busan', lat: 35.18, lon: 129.075, population: 3260000, malePopulation: 1575600, femalePopulation: 1666000 },
+        { name: 'Incheon', lat: 37.4833, lon: 126.6333, population: 2964820, malePopulation: 1524286, femalePopulation: 1527675 },
+        { name: 'Daegu', lat: 35.8717, lon: 128.6017, population: 2350000, malePopulation: 1152579, femalePopulation: 1200453 },
+        { name: 'Daejeon', lat: 36.35, lon: 127.385, population: 1446749, malePopulation: 717936, femalePopulation: 722793 },
+        { name: 'Gwangju', lat: 35.1653, lon: 126.8486, population: 1432049, malePopulation: 686799, femalePopulation: 705214 },
+        { name: 'Ulsan', lat: 35.55, lon: 129.3167, population: 1111371, malePopulation: 562926, femalePopulation: 529022 },
+        { name: 'Suwon', lat: 37.2667, lon: 127.0167, population: 1191063, malePopulation: 599668, femalePopulation: 593337 },
+        { name: 'Goyang', lat: 37.65, lon: 126.8, population: 1063175, malePopulation: 519280, femalePopulation: 546843 },
+        { name: 'Changwon', lat: 35.2708, lon: 128.6631, population: 1003737, malePopulation: 515722, femalePopulation: 498181 },
+        { name: 'Hwaseong', lat: 37.208, lon: 126.831, population: 1040000, malePopulation: 506675, femalePopulation: 469980 },
+    ];
 
-function loadQuestion() {
-    answeredThisQuestion = false;
-    feedbackElement.textContent = '';
-    nextButton.classList.add('hidden'); // Hide next button until answered
+    // Filter cities with population greater than or equal to 100,000
+    cities = cities.filter(city => city.population >= minPopulationThreshold);
 
-    if (currentQuestionIndex < quizData.length) {
-        const currentQuestion = quizData[currentQuestionIndex];
-        mascotImage.src = currentQuestion.image;
-        questionText.textContent = currentQuestion.question;
-        optionsContainer.innerHTML = ''; // Clear previous options
-
-        currentQuestion.options.forEach(option => {
-            const button = document.createElement('button');
-            button.textContent = option;
-            button.classList.add('option-button');
-            button.addEventListener('click', () => selectAnswer(button, option, currentQuestion.answer));
-            optionsContainer.appendChild(button);
-        });
-    } else {
-        showResults();
-    }
-}
-
-function selectAnswer(selectedButton, selectedOption, correctAnswer) {
-    if (answeredThisQuestion) return; // Prevent multiple answers per question
-    answeredThisQuestion = true;
-
-    // Disable all option buttons
-    Array.from(optionsContainer.children).forEach(button => {
-        button.classList.add('disabled');
+    // Add markers to map for filtered cities
+    cities.forEach(city => {
+        const ratio = (city.malePopulation / city.femalePopulation).toFixed(2);
+        L.marker([city.lat, city.lon]).addTo(map)
+            .bindPopup(`<b>${city.name}</b><br>Total Population: ${city.population.toLocaleString()}<br>Male: ${city.malePopulation.toLocaleString()}<br>Female: ${city.femalePopulation.toLocaleString()}<br>M/F Ratio: ${ratio}`);
     });
 
-    if (selectedOption === correctAnswer) {
-        score++;
-        selectedButton.classList.add('correct');
-        feedbackElement.textContent = 'Correct!';
-        feedbackElement.style.color = '#2ecc71';
-    } else {
-        selectedButton.classList.add('incorrect');
-        feedbackElement.textContent = `Wrong! The correct answer is '${correctAnswer}'.`;
-        feedbackElement.style.color = '#e74c3c';
+    // Dynamically generate population table
+    const populationContainer = document.querySelector('.population-container');
+    let tableHTML = `
+        <h2>2025년 12월 기준 인구 10만명 이상 도시</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>도시 (City)</th>
+                    <th>총 인구 (Total Population)</th>
+                    <th>남자 인구 (Male Population)</th>
+                    <th>여자 인구 (Female Population)</th>
+                    <th>남녀 비율 (M/F Ratio)</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
 
-        // Highlight the correct answer
-        Array.from(optionsContainer.children).forEach(button => {
-            if (button.textContent === correctAnswer) {
-                button.classList.add('correct');
-            }
+    cities.forEach(city => {
+        const ratio = (city.malePopulation / city.femalePopulation).toFixed(2);
+        tableHTML += `
+            <tr>
+                <td>${city.name}</td>
+                <td>${city.population.toLocaleString()}</td>
+                <td>${city.malePopulation.toLocaleString()}</td>
+                <td>${city.femalePopulation.toLocaleString()}</td>
+                <td>${ratio}</td>
+            </tr>
+        `;
+    });
+
+    tableHTML += `
+            </tbody>
+        </table>
+    `;
+    populationContainer.innerHTML = tableHTML;
+
+    fetch('https://raw.githubusercontent.com/southkorea/southkorea-maps/master/kostat/2018/json/skorea-provinces-2018-geo.json')
+        .then(response => response.json())
+        .then(geojsonData => {
+            L.geoJSON(geojsonData, {
+                style: {
+                    color: '#3388ff',
+                    weight: 1,
+                    opacity: 0.5
+                }
+            }).addTo(map);
         });
-    }
-    nextButton.classList.remove('hidden'); // Show next button
-}
-
-function showResults() {
-    quizSection.classList.add('hidden');
-    resultSection.classList.remove('hidden');
-    scoreText.textContent = `You scored ${score} out of ${quizData.length}!`;
-}
-
-nextButton.addEventListener('click', () => {
-    currentQuestionIndex++;
-    loadQuestion();
 });
-
-restartButton.addEventListener('click', () => {
-    currentQuestionIndex = 0;
-    score = 0;
-    quizSection.classList.remove('hidden');
-    resultSection.classList.add('hidden');
-    loadQuestion();
-});
-
-// Initial load
-loadQuestion();
