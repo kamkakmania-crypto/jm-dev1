@@ -1,1 +1,162 @@
-/* Add styles here */
+/* General Body Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f4f7f6; /* Light background for a clean look */
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Quiz Container */
+.quiz-container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 2em;
+}
+
+/* Question Section */
+.question-section {
+    margin-bottom: 25px;
+}
+
+.mascot-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+#question-text {
+    font-size: 1.3em;
+    color: #34495e;
+    margin-bottom: 20px;
+}
+
+/* Options Container */
+.options-container {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column for mobile */
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.option-button {
+    background-color: #ecf0f1;
+    color: #2c3e50;
+    border: 2px solid #bdc3c7;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.option-button:hover:not(.correct):not(.incorrect):not(.disabled) {
+    background-color: #dcdfe1;
+    border-color: #95a5a6;
+}
+
+.option-button.correct {
+    background-color: #2ecc71; /* Green for correct */
+    color: white;
+    border-color: #27ae60;
+}
+
+.option-button.incorrect {
+    background-color: #e74c3c; /* Red for incorrect */
+    color: white;
+    border-color: #c0392b;
+}
+
+.option-button.disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Feedback Message */
+.feedback {
+    font-size: 1.1em;
+    margin-top: -10px; /* Adjust to sit closer to options */
+    margin-bottom: 20px;
+    min-height: 25px; /* Reserve space to prevent layout shifts */
+    color: #2c3e50;
+}
+
+/* Buttons (Next, Restart) */
+.next-button, .restart-button {
+    background-color: #3498db; /* Blue */
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: auto;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.next-button:hover, .restart-button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Result Section */
+.result-section {
+    padding: 20px;
+    border: 1px dashed #bdc3c7;
+    border-radius: 8px;
+    margin-top: 30px;
+    background-color: #f9fbfb;
+}
+
+.result-section h2 {
+    color: #34495e;
+    margin-bottom: 15px;
+}
+
+#score-text {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* Utility Class */
+.hidden {
+    display: none;
+}
+
+/* Responsive Adjustments */
+@media (min-width: 600px) {
+    .options-container {
+        grid-template-columns: 1fr 1fr; /* Two columns for larger screens */
+    }
+}
+
+@media (min-width: 900px) {
+    .options-container {
+        grid-template-columns: repeat(4, 1fr); /* Four columns for even larger screens */
+    }
+}

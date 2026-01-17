@@ -1,14 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Emblem Quiz</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+    <div class="quiz-container">
+        <h1>Team Emblem Quiz</h1>
+        <div id="quiz">
+            <div class="question-section">
+                <img id="mascot-image" src="" alt="Team Emblem" class="mascot-image">
+                <p id="question-text"></p>
+            </div>
+            <div id="options-container" class="options-container">
+                <!-- Options will be dynamically loaded here -->
+            </div>
+            <div id="feedback" class="feedback"></div>
+            <button id="next-button" class="next-button">Next Question</button>
+        </div>
+        <div id="result-section" class="result-section hidden">
+            <h2>Quiz Results</h2>
+            <p id="score-text"></p>
+            <button id="restart-button" class="restart-button">Restart</button>
+        </div>
+    </div>
+    <script src="main.js"></script>
 </body>
 </html>
